@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  app:
+    image: shakeme/dokuwiki
+    ports:
+      - "80:80"
+    volumes:
+      - "conf:/var/www/html/conf"
+      - "data:/var/www/html/data"
+      - "plugins:/var/www/html/lib/plugins"
+      - "tpl:/var/www/html/lib/tpl"
+
+volumes:
+  conf:
+  data:
+  plugins:
+  tpl:
+
+# vim: ai expandtab ts=2 sts=2 sw=2
+

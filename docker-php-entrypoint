@@ -1,0 +1,27 @@
+#!/bin/sh
+set -e
+
+VOLUMES="conf data lib/plugins lib/tpl"
+VERSION_SRC=$(cat /src/VERSION)
+
+for volume in $VOLUMES; do
+    VERSION=""
+
+    if [ -f /var/www/html/${volume}/VERSION ]; then
+        VERSION=$(cat /var/www/html/${volume}/VERSION)
+    fi
+
+    if [ "$VERSION" != "$VERSION_SRC" ]; then
+        cp -ru /src/${volume}/. /var/www/html/${volume}/
+        cp -f /src/VERSION /var/www/html/${volume}/VERSION
+        chown -R www-data.www-data /var/www/html/${volume}
+    fi
+done
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php "$@"
+fi
+
+exec "$@"
+
