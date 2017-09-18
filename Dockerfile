@@ -17,7 +17,11 @@ RUN cd /var/www/html \
     && cp -prf data/. /src/data/ \
     && cp -prf lib/plugins/. /src/lib/plugins/ \
     && cp -prf lib/tpl/. /src/lib/tpl/ \
-    && a2enmod rewrite
+    && a2enmod rewrite \
+    && cp .htaccess.dist .htaccess \
+    && sed -i 's/^#RewriteEngine/RewriteEngine/g' /var/www/html/.htaccess \
+    && sed -i 's/^#RewriteRule/RewriteRule/g' /var/www/html/.htaccess \
+    && sed -i 's/^#RewriteCond/RewriteCond/g' /var/www/html/.htaccess
 
 VOLUME ["/var/www/html/conf", ["/var/www/html/data"]
 VOLUME ["/var/www/html/lib/plugins", ["/var/www/html/lib/tpl"]
