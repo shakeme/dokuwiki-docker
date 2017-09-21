@@ -6,7 +6,8 @@ ARG TAG=release_stable_2017-02-19e
 
 ADD https://github.com/splitbrain/dokuwiki/archive/$TAG.tar.gz /dokuwiki.tar.gz
 
-RUN cd /var/www/html \
+RUN docker-php-ext-enable opcache \
+    && cd /var/www/html \
     && tar xzf /dokuwiki.tar.gz --strip 1 \
     && rm /dokuwiki.tar.gz \
     && chown -R www-data.www-data -R /var/www/html \
